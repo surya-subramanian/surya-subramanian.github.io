@@ -3,120 +3,186 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+    <meta http-equiv="Pragma" content="no-cache">
+    <meta http-equiv="Expires" content="0">
     <title>surya subramanian</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-        /* Custom styles for lowercase and minimalistic feel with enhanced aesthetics */
+        /* Improved styles for better readability and spacing */
         body {
             font-family: 'Inter', sans-serif;
             color: #374151; /* Tailwind gray-700 */
             background-color: #ffffff; /* White background */
-            max-width: 768px; /* Increased from 700px for less cramped feel */
-            margin: 60px auto; /* Increased top/bottom margin for more breathing room */
-            padding: 0 25px; /* Slightly more horizontal padding */
-            line-height: 1.7; /* Good for readability */
-            text-transform: lowercase; /* Ensure all text is lowercase */
-            -webkit-font-smoothing: antialiased; /* Smoother fonts on WebKit */
-            -moz-osx-font-smoothing: grayscale; /* Smoother fonts on Firefox */
+            margin: 0; /* Reset margin */
+            padding: 0; /* Reset padding */
+            line-height: 1.7; /* Improved readability */
+            text-transform: lowercase; /* Keeping the lowercase aesthetic */
+            -webkit-font-smoothing: antialiased;
+            -moz-osx-font-smoothing: grayscale;
+            font-size: 16px; /* Base font size */
+            display: flex;
+            justify-content: center; /* Center horizontally */
+            min-height: 100vh; /* Full viewport height */
         }
+        
+        .container {
+            max-width: 700px; /* Slightly narrower for better readability */
+            width: 100%; /* Full width up to max-width */
+            padding: 60px 30px; /* Increased padding for better content spacing */
+        }
+        
         h1 {
-            font-size: 2.5rem; /* Slightly larger for more impact (was 2.25rem) */
-            font-weight: 600; /* semibold */
-            margin-bottom: 2rem; /* Increased for better separation (was 1rem) */
-            color: #111827; /* Tailwind gray-900 */
+            font-size: 100rem; /* A little bigger title */
+            font-weight: 800; /* A bit bolder */
+            margin-bottom: 2.5rem;
+            color: #111827;
+            letter-spacing: -0.025em;
+            border-bottom: 2px solid #e5e7eb;
+            padding-bottom: 0.75rem;
         }
+        
         h2 {
-            font-size: 1.75rem; /* Slightly larger for better hierarchy (was 1.5rem) */
-            font-weight: 500; /* medium */
-            margin-top: 3rem;   /* Significantly increased for clear section separation (was 2rem) */
-            margin-bottom: 1.25rem; /* Increased for better spacing below heading (was 0.75rem) */
-            color: #1f2937; /* Tailwind gray-800 */
+            font-size: 2rem; /* Section title size */
+            font-weight: 800; /* A bit bolder for better visibility */
+            margin-top: 3.5rem;
+            margin-bottom: 1.5rem;
+            color: #111827;
+            border-bottom: 1px solid #f3f4f6;
+            padding-bottom: 0.5rem;
         }
+        
         p {
-            margin-bottom: 1.25rem; /* Slightly increased for better paragraph separation (was 1rem) */
-            font-size: 1rem; /* Standard paragraph size */
+            margin-bottom: 1.2rem; /* Reduced space below paragraphs */
+            font-size: 1rem;
+            line-height: 1.8; /* Slightly increased line height */
         }
+        
+        /* Reduced space between consecutive paragraphs */
+        section p + p {
+            margin-top: 1.3rem; /* Reduced space between paragraphs */
+        }
+        
+        /* Removed special spacing class */
+        
         a {
-            color: #2563eb; /* Tailwind blue-600 */
+            color: #2563eb; /* Blue links */
             text-decoration: none;
-            font-weight: 500; /* medium */
-            transition: color 0.2s ease-in-out; /* Smooth color transition on hover */
+            font-weight: 500; /* Medium weight for links */
+            transition: color 0.2s ease-in-out;
+            border-bottom: 1px solid #e5e7eb; /* Subtle underline */
+            padding-bottom: 1px; /* Spacing for underline */
         }
+        
         a:hover {
-            text-decoration: underline;
-            color: #1d4ed8; /* Tailwind blue-700 */
+            color: #1d4ed8; /* Darker blue on hover */
+            border-bottom-color: #1d4ed8; /* Darker underline on hover */
         }
+        
         .contact-links {
-            margin-top: 1.5rem; /* Space above the contact links block */
+            margin-top: 1rem; /* Reduced space above contact links */
+            display: flex; /* Flex for better alignment */
+            gap: 1.5rem; /* Space between icons */
+            justify-content: flex-start; /* Left align icons */
+            padding: 0.7rem 0; /* Reduced padding */
+            /* No border */
         }
+        
         .contact-links a {
-            display: inline-flex; /* Align icon properly if text were next to it */
-            align-items: center; /* Vertically align items */
-            margin-right: 2rem; /* Increased spacing between icons (was 1.5rem) */
-            color: #374151; /* Default icon color (gray-700), to match body text */
-            transition: color 0.2s ease-in-out; /* Smooth color transition for icons */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #6b7280; /* Lighter gray for better minimalism */
+            transition: all 0.2s ease-in-out;
+            border-bottom: none; /* Remove underline for icons */
+            opacity: 0.8; /* Slightly transparent for minimalism */
         }
+        
         .contact-links a:hover {
-            color: #1d4ed8; /* Icon color on hover (blue-700) */
-            text-decoration: none; /* Ensure no underline appears on icon hover */
+            color: #2563eb; /* Blue on hover */
+            transform: translateY(-2px); /* Subtle lift effect */
+            opacity: 1; /* Full opacity on hover */
         }
-        .contact-links a:last-child {
-            margin-right: 0; /* No margin on the last icon */
-        }
+        
         .contact-links svg {
-            width: 1.5rem; /* Increased icon size (was 1.25rem) */
-            height: 1.5rem; /* Increased icon size (was 1.25rem) */
-            /* margin-right is not needed here as there's no text next to the SVG within the <a> */
+            width: 1.5rem; /* Slightly smaller icons */
+            height: 1.5rem;
         }
+        
+        /* Section highlighting */
+        section {
+            padding: 1rem 0; /* Padding for sections */
+        }
+        
+        /* We only want section titles to be bold, handled by the h2 styling above */
     </style>
 </head>
-<body class="antialiased"> <h1>surya subramanian</h1>
+<body class="antialiased">
+    <div class="container">
+    <header>
+        <h1 style="font-size: 2.5rem; font-weight: 300;">surya subramanian</h1>
+    </header>
 
-    <h2>about</h2>
-    <p>
-        i am an engineer and researcher interested in the intersection of machine learning, systems and performance.
-        currently, i am working on <a href="https://github.com/openai/triton" target="_blank" rel="noopener noreferrer">triton</a>
-        and <a href="https://github.com/pytorch/pytorch" target="_blank" rel="noopener noreferrer">pytorch</a> @ meta ai.
-        i am also conducting research at georgia tech on efficient inference for mixture of experts models.
-    </p>
+    <section>
+        <h2 style="font-size: 1.5rem; font-weight: 40;">about</h2>
+        <p>
+            i am an engineer and researcher interested in the intersection of machine learning, systems, and performance.
+            currently, i am working on <a href="https://github.com/openai/triton" target="_blank" rel="noopener noreferrer">triton</a>
+            and <a href="https://github.com/pytorch/pytorch" target="_blank" rel="noopener noreferrer">pytorch</a> at meta ai.
+            i'm also a computer science student at georgia tech, currently researching efficient inference for mixture-of-experts models. previously, i was a swe
+            intern at pinterest working on distributed systems and ml infra for ads ranking and conversion user match models.
+        </p>
+    </section>
 
-    <h2>my interests</h2>
-    <p>
-        i'm passionate about ml training infrastructure, compilers, inference, distributed systems, and high performance computing for agi.
-        i'm really interested in the entire ml acceleration stack for foundation models – from large-scale distributed training and model parallelism
-        to efficient inference at scale. i am particularly fascinated by scaling transformer architectures and various inference optimizations.
-        these include low-level optimizations for inference (gpu kernels and compilers) efficient attention mechanisms,
-        accelerated decoding methods, and model compression techniques.
-    </p>
+    <section>
+        <h2 style="font-size: 1.5rem; font-weight: 40;">my interests</h2>
+        <p>
+            i'm passionate about ml training infrastructure, compilers, inference, distributed systems, and high performance computing for agi.
+            i'm really interested in the entire ml acceleration stack for foundation models, from large-scale distributed training and model parallelism
+            to efficient inference at scale.
+        </p>
+        
+        <p>
+            i am particularly fascinated by scaling the transformer architecture for large-scale training and various inference optimizations.
+            these include low-level optimizations for inference through gpu kernels and ml compilers, as well as algorithmic improvements like efficient attention mechanisms, accelerated decoding methods, and model compression techniques.
+        </p>
+        
+        <p>
+            outside of work, i love weight-lifting, hanging out with my friends, going to nice restaurants, trying out different caffes, and watching football and basketball in my spare time.
+        </p>
+    </section>
 
-    <h2>outside of work</h2>
-    <p>
-        i love weight-lifting, hanging out with my friends, going to expensive restaurants, trying out different caffes + coffee,
-        cooking, and watching football and basketball in my spare time.
-    </p>
-
-    <h2>contact</h2>
-    <div class="contact-links">
-        <a href="https://x.com/suryaasub" target="_blank" rel="noopener noreferrer" title="twitter">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M22 4s-.7 2.1-2 3.4c1.6 10-9.4 17.3-18 11.6 2.2.1 4.4-.6 6-2C3 15.5.5 9.6 3 5c2.2 2.6 5.6 4.1 9 4-.9-4.2 4-6.6 7-3.8 1.1 0 3-1.2 3-1.2z"/>
-            </svg>
-        </a>
-        <a href="https://github.com/codingwithsurya" target="_blank" rel="noopener noreferrer" title="github">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
-                <path d="M9 18c-4.51 2-5-2-7-2"/>
-            </svg>
-        </a>
-        <a href="https://www.linkedin.com/feed/" target="_blank" rel="noopener noreferrer" title="linkedin">
-            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                <rect width="4" height="12" x="2" y="9"/>
-                <circle cx="4" cy="4" r="2"/>
-            </svg>
-        </a>
+    <section>
+        <h2 style="font-size: 1.5rem; font-weight: 40;">contact</h2>
+        <p>feel free to reach out at ssubrama32@gatech.edu!</p>
+        <div class="contact-links">
+            <a href="mailto:ssubrama32@gatech.edu" target="_blank" rel="noopener noreferrer" title="email">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
+                    <polyline points="22,6 12,13 2,6"></polyline>
+                </svg>
+            </a>
+            <a href="https://x.com/suryaasub" target="_blank" rel="noopener noreferrer" title="x">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
+                </svg>
+            </a>
+            <a href="https://github.com/codingwithsurya" target="_blank" rel="noopener noreferrer" title="github">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
+                    <path d="M9 18c-4.51 2-5-2-7-2"/>
+                </svg>
+            </a>
+            <a href="https://www.linkedin.com/in/suryasub/" target="_blank" rel="noopener noreferrer" title="linkedin">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
+                    <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
+                    <rect width="4" height="12" x="2" y="9"/>
+                    <circle cx="4" cy="4" r="2"/>
+                </svg>
+            </a>
+        </div>
+    </section>
     </div>
-
 </body>
 </html>
