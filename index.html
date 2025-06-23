@@ -1,252 +1,217 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
-    <meta http-equiv="Pragma" content="no-cache" />
-    <meta http-equiv="Expires" content="0" />
-
-    <!-- SEO Metadata -->
-    <title>Surya Subramanian</title>
-    <meta name="description" content="Personal website of Surya Subramanian — CS @ Georgia Tech | ML Systems | AI Research" />
-    <meta name="keywords" content="Surya Subramanian, Georgia Tech, AI Research, CUDA, PyTorch, Machine Learning Systems, Deep Learning, ML Engineering, ML Infra" />
-    <meta name="author" content="Surya Subramanian" />
-
-    <!-- Open Graph for link previews -->
-    <meta property="og:title" content="Surya Subramanian" />
-    <meta property="og:description" content="CS @ Georgia Tech | ML Systems Engineer & Researcher" />
-    <meta property="og:url" content="https://surya-subramanian.github.io/" />
-    <meta property="og:type" content="website" />
-    <!-- Add an og:image for better link previews -->
-    <meta property="og:image" content="https://example.com/your-share-image.jpg" />
-
-    <!-- Twitter card -->
-    <meta name="twitter:card" content="summary" />
-    <meta name="twitter:title" content="Surya Subramanian" />
-    <meta name="twitter:description" content="Personal website of Surya Subramanian — CS @ Georgia Tech, AI + Systems." />
-    <!-- Add a twitter:image for better link previews -->
-    <meta name="twitter:image" content="https://example.com/your-share-image.jpg" />
-
-    <!-- Tailwind CSS (You already have this) -->
-    <script src="https://cdn.tailwindcss.com"></script>
-    <!-- Google Fonts: Lora (Serif for Body), Inter (Sans-serif for Headings/UI) -->
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Lora:wght@400;500;600;700&display=swap" rel="stylesheet" />
-
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Surya Subramanian - ML Systems Engineer & Researcher</title>
+    <meta name="description" content="Machine Learning Systems Engineer & Researcher at Meta AI, working on Triton and PyTorch. Computer Science student at Georgia Tech.">
     <style>
-        /* Define a clean, muted color palette with CSS variables */
-        :root {
-            --bg-color: #F8F8F8; /* Very light off-white background */
-            --text-color: #3C3C3C; /* Dark gray for main text */
-            --heading-color: #202020; /* Slightly darker for headings */
-            --link-color: #007bff; /* Classic blue for links */
-            --link-hover-color: #0056b3; /* Darker blue on hover */
-            --border-color: #EAEAEA; /* Very light gray for borders */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
         }
 
         body {
-            font-family: 'Lora', serif; /* Serif font for excellent readability */
-            color: var(--text-color);
-            background-color: var(--bg-color);
-            margin: 0;
-            padding: 0;
-            line-height: 1.75; /* Generous line height for body text */
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-            font-size: 18px; /* Comfortable base font size */
-            display: flex;
-            justify-content: center; /* Center horizontally */
-            align-items: flex-start; /* Align to top */
-            min-height: 100vh;
-            padding: 60px 20px; /* Generous padding around the container */
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            line-height: 1.6;
+            color: #374151;
+            background-color: #ffffff;
         }
-        
+
         .container {
-            max-width: 700px; /* Classic blog width for readability */
-            width: 100%; /* Full width up to max-width */
-            padding: 0; /* Content padding handled by sections */
-            background-color: #FFFFFF; /* White background for the content itself */
-            /* No heavy box-shadow or border for minimalist look */
+            max-width: 768px;
+            margin: 0 auto;
+            padding: 64px 24px;
+            min-height: 100vh;
         }
-        
+
+        @media (min-width: 1024px) {
+            .container {
+                padding: 96px 24px;
+            }
+        }
+
+        /* Header */
         header {
-            padding-bottom: 30px;
-            margin-bottom: 40px;
-            border-bottom: 1px solid var(--border-color); /* Subtle separator */
+            text-align: center;
+            margin-bottom: 80px;
         }
 
         h1 {
-            font-family: 'Inter', sans-serif; /* Sans-serif for headings */
-            font-size: 2.8rem; /* Prominent but not screaming */
-            font-weight: 800; /* Extra bold for impact */
-            margin-bottom: 0.5rem;
-            color: var(--heading-color);
-            letter-spacing: -0.02em; /* Slightly tighter for crispness */
-            line-height: 1.1;
-            /* Standard capitalization (not uppercase) */
+            font-size: 2.5rem;
+            font-weight: 300;
+            color: #111827;
+            margin-bottom: 16px;
+            letter-spacing: -0.025em;
         }
-        
+
+        @media (min-width: 1024px) {
+            h1 {
+                font-size: 3rem;
+            }
+        }
+
         .tagline {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.15rem;
-            font-weight: 500;
-            color: var(--text-color);
-            opacity: 0.8;
-            margin-top: 0.5rem;
+            font-size: 1.125rem;
+            color: #6b7280;
+            font-weight: 400;
+        }
+
+        @media (min-width: 1024px) {
+            .tagline {
+                font-size: 1.25rem;
+            }
+        }
+
+        /* Sections */
+        section {
+            margin-bottom: 64px;
         }
 
         h2 {
-            font-family: 'Inter', sans-serif;
-            font-size: 1.6rem; /* Section title size */
-            font-weight: 700; /* Bold */
-            margin-top: 3.5rem;
-            margin-bottom: 1.2rem; /* Reduced space after h2 */
-            color: var(--heading-color);
-            border-bottom: 1px solid var(--border-color); /* Subtle underline */
-            padding-bottom: 0.75rem;
-            letter-spacing: 0.01em; /* Slight letter spacing */
-            /* Standard capitalization (or Title Case) */
-        }
-        
-        p {
-            margin-bottom: 1.5rem; /* Generous space below paragraphs */
-            font-size: 1.05rem; /* Slightly larger body text for comfort */
-            line-height: 1.8;
-            color: var(--text-color);
-            /* Standard capitalization */
-        }
-        
-        a {
-            color: var(--link-color);
-            text-decoration: underline; /* Default underline for classic look */
-            font-weight: 500; /* Medium weight for links */
-            transition: color 0.2s ease;
-        }
-        
-        a:hover {
-            color: var(--link-hover-color);
-            text-decoration: none; /* Remove underline on hover for a clean effect */
-        }
-        
-        section {
-            padding: 0 30px; /* Padding for sections to keep content within bounds */
-        }
-        section:first-of-type {
-             padding-top: 20px; /* Small top padding for first section */
-        }
-        section:last-of-type {
-            padding-bottom: 40px; /* Extra bottom padding for last section */
-        }
-        
-        .contact-links {
-            margin-top: 2rem;
-            display: flex;
-            gap: 1.8rem; /* Space between icons */
-            justify-content: flex-start; /* Left align icons */
-            padding: 1.5rem 30px 0; /* Padding matches section padding */
-            border-top: 1px solid var(--border-color); /* Subtle separator */
-        }
-        
-        .contact-links a {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: var(--text-color); /* Icons in a natural text color */
-            transition: all 0.2s ease-in-out;
-            text-decoration: none; /* No underline for icons */
-            opacity: 0.8; /* Slightly muted */
-        }
-        
-        .contact-links a:hover {
-            color: var(--link-color); /* Accent color on hover */
-            transform: translateY(-2px); /* Subtle lift */
-            opacity: 1; /* Full opacity */
-        }
-        
-        .contact-links svg {
-            width: 1.6rem; /* Slightly larger icons */
-            height: 1.6rem;
-            stroke-width: 1.7; /* Slightly thicker strokes for icons */
+            font-size: 1.5rem;
+            font-weight: 500;
+            color: #111827;
+            margin-bottom: 24px;
         }
 
-        /* Responsive Adjustments */
-        @media (max-width: 768px) {
-            body {
-                padding: 40px 15px;
-                font-size: 17px;
-            }
-            .container {
-                width: 100%;
-            }
-            h1 {
-                font-size: 2.2rem;
-            }
-            h2 {
-                font-size: 1.4rem;
-            }
-            .tagline {
-                font-size: 1rem;
-            }
-            section, .contact-links {
-                padding-left: 20px;
-                padding-right: 20px;
-            }
+        p {
+            font-size: 1.125rem;
+            line-height: 1.75;
+            color: #374151;
+            margin-bottom: 24px;
+        }
+
+        p:last-child {
+            margin-bottom: 0;
+        }
+
+        /* Links */
+        a {
+            color: #2563eb;
+            text-decoration: underline;
+            text-decoration-thickness: 1px;
+            text-underline-offset: 2px;
+            transition: color 0.2s ease;
+        }
+
+        a:hover {
+            color: #1e40af;
+        }
+
+        /* Social Icons */
+        .social-links {
+            display: flex;
+            gap: 24px;
+            margin-top: 32px;
+        }
+
+        .social-links a {
+            color: #6b7280;
+            text-decoration: none;
+            transition: color 0.2s ease;
+        }
+
+        .social-links a:hover {
+            color: #111827;
+        }
+
+        .social-links svg {
+            width: 24px;
+            height: 24px;
+        }
+
+        /* Footer */
+        footer {
+            text-align: center;
+            border-top: 1px solid #e5e7eb;
+            padding-top: 32px;
+            margin-top: 64px;
+        }
+
+        footer p {
+            font-size: 0.875rem;
+            color: #6b7280;
+            margin-bottom: 0;
+        }
+
+        /* Interests spacing */
+        .interests-content {
+            display: flex;
+            flex-direction: column;
+            gap: 24px;
         }
     </style>
 </head>
-<body class="antialiased">
+<body>
     <div class="container">
-        <header style="padding: 0 30px;">
+        <!-- Header -->
+        <header>
             <h1>Surya Subramanian</h1>
-            <p class="tagline">Machine Learning Systems Engineer & Researcher</p>
         </header>
 
+        <!-- About Section -->
         <section>
             <h2>About</h2>
             <p>
                 I am an engineer and researcher interested in the intersection of machine learning, systems, and performance.
-                Currently, I work on <a href="https://github.com/openai/triton" target="_blank" rel="noopener noreferrer">Triton</a>
-                and <a href="https://github.com/pytorch/pytorch" target="_blank" rel="noopener noreferrer">PyTorch</a> at Meta AI. I'm also a Computer Science student at Georgia Tech researching efficient inference for Mixture-of-Experts models. Previously, I was a SWE
+                Currently, I'm working on 
+                <a href="https://github.com/openai/triton" target="_blank" rel="noopener noreferrer">Triton</a>
+                and 
+                <a href="https://github.com/pytorch/pytorch" target="_blank" rel="noopener noreferrer">PyTorch</a>
+                at Meta AI. I'm also a computer science student at Georgia Tech researching efficient inference for mixture-of-experts models. Previously, I was a SWE
                 intern at Pinterest working on distributed systems and ML infrastructure for ads ranking and conversion user match models.
             </p>
         </section>
 
+        <!-- Interests Section -->
         <section>
-           <h2>My Interests</h2>
-            <p>
-                I'm really interested in the full ML acceleration stack for foundation models — everything from large-scale distributed training and model parallelism to inference, GPU kernel performance, and AI compilers.
-            </p>
-
-            <p>
-                Lately, I've been especially focused on the intersection of model scaling and low-level ML systems. On the side, I also explore more algorithmic directions — things like efficient model architectures, faster decoding methods, and compression techniques.
-            </p>
-
-            <p>
-                Outside of work, I enjoy lifting weights, spending time with friends, trying out different restaurants and cafés, and watching football or basketball in my spare time.
-            </p>
+            <h2>My Interests</h2>
+            <div class="interests-content">
+                <p>
+                    I'm really interested in the full ML acceleration stack for foundation models — everything from large-scale distributed training and model parallelism to inference, GPU kernel performance, and AI compilers.
+                </p>
+                
+                <p>
+                    Lately, I've been especially focused on the intersection of model scaling and low-level ML systems. On the side, I also explore more algorithmic directions — things like efficient model architectures, faster decoding methods, and compression techniques.
+                </p>
+                
+                <p>
+                    Outside of work, I enjoy lifting weights, spending time with friends, trying out different restaurants and cafés, and watching football or basketball in my spare time.
+                </p>
+            </div>
         </section>
 
+        <!-- Contact Section -->
         <section>
             <h2>Contact</h2>
-            <p>Feel free to reach out at <a href="mailto:ssubrama32@gatech.edu">ssubrama32@gatech.edu</a>!</p>
-            <div class="contact-links">
+            <p>
+                Feel free to reach out at 
+                <a href="mailto:ssubrama32@gatech.edu">ssubrama32@gatech.edu</a>!
+            </p>
+            
+            <div class="social-links">
                 <a href="mailto:ssubrama32@gatech.edu" target="_blank" rel="noopener noreferrer" title="Email">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                         <polyline points="22,6 12,13 2,6"></polyline>
                     </svg>
                 </a>
+                
                 <a href="https://x.com/suryaasub" target="_blank" rel="noopener noreferrer" title="X (Twitter)">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
                     </svg>
                 </a>
+                
                 <a href="https://github.com/codingwithsurya" target="_blank" rel="noopener noreferrer" title="GitHub">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
                         <path d="M9 18c-4.51 2-5-2-7-2"/>
                     </svg>
                 </a>
+                
                 <a href="https://www.linkedin.com/in/suryasub/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
                     <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                         <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
@@ -256,6 +221,11 @@
                 </a>
             </div>
         </section>
+        
+        <!-- Footer -->
+        <footer>
+            <p>© 2025 Surya Subramanian</p>
+        </footer>
     </div>
 </body>
 </html>
