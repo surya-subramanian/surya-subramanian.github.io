@@ -8,189 +8,236 @@
     <meta http-equiv="Expires" content="0" />
 
     <!-- SEO Metadata -->
-    <title>surya subramanian</title>
-    <meta name="description" content="Personal website of Surya Subramanian — CS @ Georgia Tech | ML Systems" />
-    <meta name="keywords" content="Surya Subramanian, Georgia Tech, AI Research, CUDA, PyTorch, Machine Learning Systems" />
+    <title>Surya Subramanian - ML Systems Engineer</title>
+    <meta name="description" content="Personal website of Surya Subramanian — CS @ Georgia Tech | ML Systems | AI Research" />
+    <meta name="keywords" content="Surya Subramanian, Georgia Tech, AI Research, CUDA, PyTorch, Machine Learning Systems, Deep Learning, ML Engineering, ML Infra" />
     <meta name="author" content="Surya Subramanian" />
 
     <!-- Open Graph for link previews -->
     <meta property="og:title" content="Surya Subramanian" />
-    <meta property="og:description" content="CS @ Georgia Tech | ML Systems" />
+    <meta property="og:description" content="CS @ Georgia Tech | ML Systems Engineer & Researcher" />
     <meta property="og:url" content="https://surya-subramanian.github.io/" />
     <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://example.com/your-image.jpg" /> <!-- Consider adding a relevant image -->
 
     <!-- Twitter card -->
     <meta name="twitter:card" content="summary" />
     <meta name="twitter:title" content="Surya Subramanian" />
     <meta name="twitter:description" content="Personal website of Surya Subramanian — CS @ Georgia Tech, AI + Systems." />
+    <meta name="twitter:image" content="https://example.com/your-image.jpg" /> <!-- Consider adding a relevant image -->
 
-    <!-- Tailwind + Fonts -->
+    <!-- Tailwind CSS (You already have this) -->
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet" />
+    <!-- Google Fonts: Inter (main text), Poppins (headings for stronger impact) -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;404;500;600;700&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet" />
 
     <style>
-        /* Improved styles for better readability and spacing */
+        /* Define a modern color palette with CSS variables */
+        :root {
+            --primary-bg: #F8F8F8; /* Light off-white */
+            --primary-text: #2D3748; /* Dark charcoal */
+            --secondary-text: #4A5568; /* Medium gray */
+            --accent-color: #3B82F6; /* Bright Blue */
+            --accent-hover: #2563EB; /* Darker Blue */
+            --border-light: #E2E8F0; /* Light gray border */
+            --border-medium: #CBD5E0; /* Medium gray border */
+        }
+
         body {
             font-family: 'Inter', sans-serif;
-            color: #374151; /* Tailwind gray-700 */
-            background-color: #ffffff; /* White background */
-            margin: 0; /* Reset margin */
-            padding: 0; /* Reset padding */
-            line-height: 1.7; /* Improved readability */
-            text-transform: lowercase; /* Keeping the lowercase aesthetic */
+            color: var(--primary-text);
+            background-color: var(--primary-bg);
+            margin: 0;
+            padding: 0;
+            line-height: 1.65; /* Improved readability */
             -webkit-font-smoothing: antialiased;
             -moz-osx-font-smoothing: grayscale;
-            font-size: 16px; /* Base font size */
+            font-size: 17px; /* Base font size slightly larger */
             display: flex;
-            justify-content: center; /* Center horizontally */
-            min-height: 100vh; /* Full viewport height */
+            justify-content: center;
+            align-items: flex-start; /* Align to top, not center */
+            min-height: 100vh;
+            padding-top: 40px; /* Add some space from the top */
+            padding-bottom: 40px;
         }
-        
+
         .container {
-            max-width: 700px; /* Slightly narrower for better readability */
-            width: 100%; /* Full width up to max-width */
-            padding: 60px 30px; /* Increased padding for better content spacing */
+            max-width: 800px; /* Wider for more content space */
+            width: 90%; /* Ensure responsiveness */
+            padding: 50px 40px; /* Generous padding */
+            background-color: #FFFFFF; /* White background for the content box */
+            border-radius: 12px; /* Slightly rounded corners */
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.08); /* Soft shadow for depth */
+            border: 1px solid var(--border-light);
         }
-        
+
+        header {
+            text-align: center; /* Center the main heading */
+            margin-bottom: 40px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid var(--border-medium); /* More defined separation */
+        }
+
         h1 {
-            font-size: 100rem; /* A little bigger title */
-            font-weight: 800; /* A bit bolder */
-            margin-bottom: 2.5rem;
-            color: #111827;
-            letter-spacing: -0.025em;
-            border-bottom: 2px solid #e5e7eb;
-            padding-bottom: 0.75rem;
+            font-family: 'Poppins', sans-serif; /* Use Poppins for headings */
+            font-size: 3.5rem; /* Significantly larger title */
+            font-weight: 800; /* Extra bold */
+            color: var(--primary-text);
+            letter-spacing: -0.04em; /* Tighter letter spacing */
+            text-transform: uppercase; /* ALL CAPS FOR H1 */
+            margin-bottom: 0.5rem; /* Space below H1 if there's a tagline */
+            line-height: 1.1;
         }
-        
+
+        .tagline {
+            font-size: 1.25rem;
+            font-weight: 500;
+            color: var(--secondary-text);
+            margin-top: 0.5rem;
+        }
+
         h2 {
-            font-size: 2rem; /* Section title size */
-            font-weight: 800; /* A bit bolder for better visibility */
+            font-family: 'Poppins', sans-serif;
+            font-size: 1.8rem; /* Section title size */
+            font-weight: 700; /* Bold */
             margin-top: 3.5rem;
             margin-bottom: 1.5rem;
-            color: #111827;
-            border-bottom: 1px solid #f3f4f6;
-            padding-bottom: 0.5rem;
+            color: var(--accent-color); /* Section headings in accent color */
+            border-bottom: 2px solid var(--border-light); /* Thicker underline */
+            padding-bottom: 0.75rem;
+            letter-spacing: 0.02em; /* Slightly spaced out */
+            text-transform: uppercase; /* ALL CAPS FOR H2 */
         }
-        
+
         p {
-            margin-bottom: 1.2rem; /* Reduced space below paragraphs */
+            margin-bottom: 1.3rem; /* Consistent space below paragraphs */
             font-size: 1rem;
-            line-height: 1.8; /* Slightly increased line height */
+            line-height: 1.75;
+            color: var(--secondary-text); /* Slightly lighter text for body */
         }
-        
-        /* Reduced space between consecutive paragraphs */
-        section p + p {
-            margin-top: 1.3rem; /* Reduced space between paragraphs */
-        }
-        
-        /* Removed special spacing class */
-        
+
         a {
-            color: #2563eb; /* Blue links */
+            color: var(--accent-color);
             text-decoration: none;
-            font-weight: 500; /* Medium weight for links */
-            transition: color 0.2s ease-in-out;
-            border-bottom: 1px solid #e5e7eb; /* Subtle underline */
-            padding-bottom: 1px; /* Spacing for underline */
+            font-weight: 600; /* Semi-bold for links */
+            transition: color 0.3s ease, border-bottom-color 0.3s ease;
+            border-bottom: 2px solid var(--accent-color); /* Thicker, colored underline */
+            padding-bottom: 1px;
         }
-        
+
         a:hover {
-            color: #1d4ed8; /* Darker blue on hover */
-            border-bottom-color: #1d4ed8; /* Darker underline on hover */
+            color: var(--accent-hover);
+            border-bottom-color: var(--accent-hover);
         }
-        
+
         .contact-links {
-            margin-top: 1rem; /* Reduced space above contact links */
-            display: flex; /* Flex for better alignment */
-            gap: 1.5rem; /* Space between icons */
-            justify-content: flex-start; /* Left align icons */
-            padding: 0.7rem 0; /* Reduced padding */
-            /* No border */
+            margin-top: 2rem;
+            display: flex;
+            gap: 2rem; /* More space between icons */
+            justify-content: center; /* Center contact icons */
+            padding-top: 1.5rem;
+            border-top: 1px solid var(--border-light); /* Separate contact section */
         }
-        
+
         .contact-links a {
             display: flex;
             align-items: center;
             justify-content: center;
-            color: #6b7280; /* Lighter gray for better minimalism */
-            transition: all 0.2s ease-in-out;
-            border-bottom: none; /* Remove underline for icons */
-            opacity: 0.8; /* Slightly transparent for minimalism */
+            color: var(--secondary-text); /* Icons are more subdued */
+            transition: all 0.25s ease-in-out;
+            border-bottom: none; /* No underline for icons */
+            opacity: 0.85;
         }
-        
+
         .contact-links a:hover {
-            color: #2563eb; /* Blue on hover */
-            transform: translateY(-2px); /* Subtle lift effect */
-            opacity: 1; /* Full opacity on hover */
+            color: var(--accent-hover);
+            transform: translateY(-3px) scale(1.05); /* More pronounced lift and slight scale */
+            opacity: 1;
         }
-        
+
         .contact-links svg {
-            width: 1.5rem; /* Slightly smaller icons */
-            height: 1.5rem;
+            width: 1.8rem; /* Larger icons */
+            height: 1.8rem;
+            stroke-width: 1.7; /* Slightly thicker strokes for icons */
         }
-        
-        /* Section highlighting */
-        section {
-            padding: 1rem 0; /* Padding for sections */
+
+        /* Responsive Adjustments */
+        @media (max-width: 768px) {
+            .container {
+                padding: 30px 25px;
+                width: 95%;
+                margin: 20px auto; /* Center on smaller screens */
+            }
+
+            h1 {
+                font-size: 2.5rem;
+            }
+
+            h2 {
+                font-size: 1.5rem;
+            }
+
+            body {
+                padding-top: 20px;
+                padding-bottom: 20px;
+            }
         }
-        
-        /* We only want section titles to be bold, handled by the h2 styling above */
     </style>
 </head>
 <body class="antialiased">
     <div class="container">
     <header>
-        <h1 style="font-size: 2.5rem; font-weight: 300;">surya subramanian</h1>
+        <h1>SURYA SUBRAMANIAN</h1>
+        <p class="tagline">MACHINE LEARNING SYSTEMS ENGINEER & RESEARCHER</p>
     </header>
 
     <section>
-        <h2 style="font-size: 1.5rem; font-weight: 40;">about</h2>
+        <h2>ABOUT</h2>
         <p>
-            i am an engineer and researcher interested in the intersection of machine learning, systems, and performance.
-            currently, i work on <a href="https://github.com/openai/triton" target="_blank" rel="noopener noreferrer">triton</a>
-            and <a href="https://github.com/pytorch/pytorch" target="_blank" rel="noopener noreferrer">pytorch</a> at meta ai. i'm also a computer science student at georgia tech researching efficient inference for mixture-of-experts models. previously, i was a swe
-            intern at pinterest working on distributed systems and ml infrastructure for ads ranking and conversion user match models.
+            I AM AN ENGINEER AND RESEARCHER INTERESTED IN THE INTERSECTION OF MACHINE LEARNING, SYSTEMS, AND PERFORMANCE.
+            CURRENTLY, I WORK ON <a href="https://github.com/openai/triton" target="_blank" rel="noopener noreferrer">TRITON</a>
+            AND <a href="https://github.com/pytorch/pytorch" target="_blank" rel="noopener noreferrer">PYTORCH</a> AT META AI. I'M ALSO A COMPUTER SCIENCE STUDENT AT GEORGIA TECH RESEARCHING EFFICIENT INFERENCE FOR MIXTURE-OF-EXPERTS MODELS. PREVIOUSLY, I WAS A SWE
+            INTERN AT PINTEREST WORKING ON DISTRIBUTED SYSTEMS AND ML INFRASTRUCTURE FOR ADS RANKING AND CONVERSION USER MATCH MODELS.
         </p>
     </section>
 
     <section>
-       <h2 style="font-size: 1.5rem; font-weight: 40;">my interests</h2>
-<p>
-  i'm really interested in the full ml acceleration stack for foundation models — everything from large-scale distributed training and model parallelism to inference, gpu kernel performance, and ai compilers.
-</p>
+       <h2>MY INTERESTS</h2>
+        <p>
+            I'M REALLY INTERESTED IN THE FULL ML ACCELERATION STACK FOR FOUNDATION MODELS — EVERYTHING FROM LARGE-SCALE DISTRIBUTED TRAINING AND MODEL PARALLELISM TO INFERENCE, GPU KERNEL PERFORMANCE, AND AI COMPILERS.
+        </p>
 
-<p>
-  lately, i've been especially focused on the intersection of model scaling and low-level ML systems. on the side, i also explore more algorithmic directions — things like efficient model architectures, faster decoding methods, and compression techniques.
-</p>
+        <p>
+            LATELY, I'VE BEEN ESPECIALLY FOCUSED ON THE INTERSECTION OF MODEL SCALING AND LOW-LEVEL ML SYSTEMS. ON THE SIDE, I ALSO EXPLORE MORE ALGORITHMIC DIRECTIONS — THINGS LIKE EFFICIENT MODEL ARCHITECTURES, FASTER DECODING METHODS, AND COMPRESSION TECHNIQUES.
+        </p>
 
-<p>
-  outside of work, i enjoy lifting weights, spending time with friends, trying out different restaurants and cafés, and watching football or basketball in my spare time.
-</p>
-
+        <p>
+            OUTSIDE OF WORK, I ENJOY LIFTING WEIGHTS, SPENDING TIME WITH FRIENDS, TRYING OUT DIFFERENT RESTAURANTS AND CAFÉS, AND WATCHING FOOTBALL OR BASKETBALL IN MY SPARE TIME.
+        </p>
     </section>
 
     <section>
-        <h2 style="font-size: 1.5rem; font-weight: 40;">contact</h2>
-        <p>feel free to reach out at ssubrama32@gatech.edu!</p>
+        <h2>CONTACT</h2>
+        <p>FEEL FREE TO REACH OUT AT <a href="mailto:ssubrama32@gatech.edu">SSUBRAMA32@GATECH.EDU</a>!</p>
         <div class="contact-links">
-            <a href="mailto:ssubrama32@gatech.edu" target="_blank" rel="noopener noreferrer" title="email">
+            <a href="mailto:ssubrama32@gatech.edu" target="_blank" rel="noopener noreferrer" title="Email">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
                     <polyline points="22,6 12,13 2,6"></polyline>
                 </svg>
             </a>
-            <a href="https://x.com/suryaasub" target="_blank" rel="noopener noreferrer" title="x">
+            <a href="https://x.com/suryaasub" target="_blank" rel="noopener noreferrer" title="X (Twitter)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
                 </svg>
             </a>
-            <a href="https://github.com/codingwithsurya" target="_blank" rel="noopener noreferrer" title="github">
+            <a href="https://github.com/codingwithsurya" target="_blank" rel="noopener noreferrer" title="GitHub">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
                     <path d="M9 18c-4.51 2-5-2-7-2"/>
                 </svg>
             </a>
-            <a href="https://www.linkedin.com/in/suryasub/" target="_blank" rel="noopener noreferrer" title="linkedin">
+            <a href="https://www.linkedin.com/in/suryasub/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
                 <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
                     <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
                     <rect width="4" height="12" x="2" y="9"/>
