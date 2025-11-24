@@ -5,7 +5,16 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Surya Subramanian</title>
     <meta name="description" content="Triton + PyTorch Distributed @ Meta AI. Computer Science @ Georgia Tech.">
+    
     <style>
+        :root {
+            --bg: #ffffff;
+            --text-primary: #111111;
+            --text-secondary: #666666;
+            --accent: #000000;
+            --spacing-unit: 24px;
+        }
+
         * {
             margin: 0;
             padding: 0;
@@ -13,214 +22,138 @@
         }
 
         body {
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-primary);
             line-height: 1.6;
-            color: #374151;
-            background-color: #ffffff;
+            -webkit-font-smoothing: antialiased;
         }
 
-        .container {
-            max-width: 768px;
+        main {
+            max-width: 620px;
             margin: 0 auto;
-            padding: 64px 24px;
-            min-height: 100vh;
+            padding: 100px 24px 60px;
         }
 
-        @media (min-width: 1024px) {
-            .container {
-                padding: 96px 24px;
-            }
-        }
-
-        /* Header */
-        header {
-            text-align: center;
-            margin-bottom: 48px;
-        }
-
+        /* Typography */
         h1 {
-            font-size: 2.5rem;
-            font-weight: 300;
-            color: #111827;
-            letter-spacing: -0.025em;
-        }
-
-        @media (min-width: 1024px) {
-            h1 {
-                font-size: 3rem;
-            }
-        }
-
-        /* Sections */
-        section {
-            margin-bottom: 40px;
+            font-size: 1.75rem;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin-bottom: 24px;
         }
 
         h2 {
-            font-size: 1.5rem;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-top: 32px; 
+            margin-bottom: 12px;
             font-weight: 500;
-            color: #111827;
-            margin-bottom: 16px;
         }
 
         p {
-            font-size: 1.125rem;
-            line-height: 1.75;
-            color: #374151;
-            margin-bottom: 16px;
-        }
-
-        p:last-child {
-            margin-bottom: 0;
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 12px; /* Reduced from 24px for tighter spacing */
         }
 
         /* Links */
         a {
-            color: #2563eb;
-            text-decoration: underline;
-            text-decoration-thickness: 1px;
-            text-underline-offset: 2px;
-            transition: color 0.2s ease;
+            color: var(--text-primary);
+            text-decoration: none;
+            border-bottom: 1px solid #e0e0e0;
+            transition: all 0.2s ease;
         }
 
         a:hover {
-            color: #1e40af;
+            border-bottom-color: var(--text-primary);
+            color: #000;
         }
 
-        /* Social Icons */
-        .social-links {
+        strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        /* Social Icons - Minimal SVG */
+        .social-row {
             display: flex;
-            gap: 24px;
-            margin-top: 24px;
+            gap: 20px;
+            margin-top: 24px; /* Reduced from 32px */
+            padding-top: 20px; /* Reduced from 24px */
+            border-top: 1px solid #f0f0f0;
         }
 
-        .social-links a {
-            color: #6b7280;
-            text-decoration: none;
-            transition: color 0.2s ease;
-        }
-
-        .social-links a:hover {
-            color: #111827;
-        }
-
-        .social-links svg {
-            width: 24px;
-            height: 24px;
-        }
-
-        /* Footer */
-        footer {
-            text-align: center;
-            border-top: 1px solid #e5e7eb;
-            padding-top: 24px;
-            margin-top: 48px;
-        }
-
-        footer p {
-            font-size: 0.875rem;
-            color: #6b7280;
-            margin-bottom: 0;
-        }
-
-        /* Interests spacing */
-        .interests-content {
+        .social-link {
+            border-bottom: none;
+            color: #999;
             display: flex;
-            flex-direction: column;
-            gap: 16px;
+            align-items: center;
+        }
+
+        .social-link:hover {
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+
+        .social-link svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        @media (max-width: 600px) {
+            main { padding-top: 60px; }
         }
     </style>
 </head>
 <body>
-    <div class="container">
-        <!-- Header -->
+
+    <main>
         <header>
             <h1>Surya Subramanian</h1>
         </header>
 
-        <!-- About Section -->
         <section>
-            <h2>About</h2>
-         <p>
-    I am an engineer and researcher interested in the intersection of machine learning, systems, and performance.
-</p>
-
-<p>
-    This past summer, I worked on
-    <a href="https://github.com/openai/triton" target="_blank" rel="noopener noreferrer">Triton</a>
-    and 
-    <a href="https://github.com/pytorch/pytorch" target="_blank" rel="noopener noreferrer">PyTorch</a>
-    at Meta AI, specifically on Triton distributed and PyTorch symmetric memory for commmuncation/compute overlap in distributed kernels. 
-    I'm currently on NVIDIA’s cuBLAS team, working on fast matmul kernels for NVIDIA's latest GPUs.
-    Previously, I was a SWE intern at Pinterest working on distributed systems and ML infrastructure for ads ranking and conversion user match models.
-</p>
-
-<p>
-    I'm also a computer science student at Georgia Tech researching efficient inference for mixture-of-experts models.
-</p>
-        </section>
-
-        <!-- Interests Section -->
-        <section>
-            <h2>My Interests</h2>
-            <div class="interests-content">
-                <p>
-                    I'm really interested in the full ML acceleration stack for foundation models — everything from large-scale distributed training and model parallelism to low-latency inference and GPU kernel performance.
-                </p>
-                
-                <p>
-                    Lately, I've been especially focused on the intersection of model scaling and low-level ML systems. On the side, I also explore more algorithmic directions — things like efficient model architectures, faster decoding methods, and compression techniques.
-                </p>
-                
-                <p>
-                    Outside of work, I enjoy lifting weights, spending time with friends, trying out different restaurants and cafés, and watching football or basketball in my spare time.
-                </p>
-            </div>
-        </section>
-
-        <!-- Contact Section -->
-        <section>
-            <h2>Contact</h2>
             <p>
-                Feel free to reach out at 
-                <a href="mailto:ssubrama32@gatech.edu">ssubrama32@gatech.edu</a>!
+                Hey y'all — my name is Surya! I study computer science @ <strong>Georgia Tech</strong>. My interests lie in the intersection of machine learning and systems for efficient model training and inference.
             </p>
-            
-            <div class="social-links">
-                <a href="mailto:ssubrama32@gatech.edu" target="_blank" rel="noopener noreferrer" title="Email">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path>
-                        <polyline points="22,6 12,13 2,6"></polyline>
-                    </svg>
-                </a>
-                
-                <a href="https://x.com/suryaasub" target="_blank" rel="noopener noreferrer" title="X (Twitter)">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"></path>
-                    </svg>
-                </a>
-                
-                <a href="https://github.com/codingwithsurya" target="_blank" rel="noopener noreferrer" title="GitHub">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4"/>
-                        <path d="M9 18c-4.51 2-5-2-7-2"/>
-                    </svg>
-                </a>
-                
-                <a href="https://www.linkedin.com/in/suryasub/" target="_blank" rel="noopener noreferrer" title="LinkedIn">
-                    <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round">
-                        <path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/>
-                        <rect width="4" height="12" x="2" y="9"/>
-                        <circle cx="4" cy="4" r="2"/>
-                    </svg>
-                </a>
-            </div>
+            <p>
+                Currently, I'm on the <strong>NVIDIA cuBLAS</strong> team working on fast matmul kernels for next-gen GPUs.
+            </p>
+            <p>
+                Previously at <strong>Meta AI</strong>, I worked on <a href="https://github.com/openai/triton">Triton</a> and <a href="https://github.com/pytorch/pytorch">PyTorch</a> Distributed. My work focused on PyTorch Symmetric Memory to enable native communication/compute overlap for distributed kernels in tensor and expert parallelism. Prior to that, I worked on ML infrastructure at <strong>Pinterest</strong>.
+            </p>
         </section>
-        
-        <!-- Footer -->
-        <footer>
-            <p>© 2025 Surya Subramanian</p>
-        </footer>
-    </div>
+
+        <section>
+            <h2>Interests</h2>
+            <p>
+                I focus on the full ML acceleration stack, from large-scale distributed training to low-latency inference and kernel optimization.
+            </p>
+            <p>
+                Outside of systems, I enjoy weightlifting and finding good coffee spots.
+            </p>
+        </section>
+
+        <!-- Socials -->
+        <nav class="social-row">
+            <a href="mailto:ssubrama32@gatech.edu" class="social-link" aria-label="Email">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </a>
+            <a href="https://x.com/suryaasub" class="social-link" aria-label="Twitter / X">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.672L8.673 4z"/><path d="M4 20l6.768-6.768m2.46-2.46L20 4"/></svg>
+            </a>
+            <a href="https://github.com/codingwithsurya" class="social-link" aria-label="GitHub">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/suryasub/" class="social-link" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+        </nav>
+
+    </main>
+
 </body>
 </html>
