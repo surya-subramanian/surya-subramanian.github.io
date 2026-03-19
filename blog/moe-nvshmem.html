@@ -1,0 +1,323 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>[Draft] MoE Training + Expert Parallelism | Surya Subramanian</title>
+    <meta name="description" content="A technical note on MoE training, expert parallel routing, and using NVSHMEM-style communication to reduce stalls.">
+    
+    <style>
+        :root {
+            --bg: #ffffff;
+            --text-primary: #111111;
+            --text-secondary: #666666;
+            --accent: #000000;
+            --muted-border: #f0f0f0;
+            --code-bg: #fafafa;
+            --code-border: #ececec;
+            --inline-code: #f5f5f5;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+            background-color: var(--bg);
+            color: var(--text-primary);
+            line-height: 1.7;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        main {
+            max-width: 700px;
+            margin: 0 auto;
+            padding: 100px 24px 60px;
+        }
+
+        h1 {
+            font-size: 1.95rem;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            line-height: 1.2;
+            margin-bottom: 10px;
+        }
+
+        h2 {
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 0.05em;
+            color: var(--text-secondary);
+            margin-top: 34px;
+            margin-bottom: 12px;
+            font-weight: 500;
+        }
+
+        p, li {
+            color: var(--text-secondary);
+            font-size: 1rem;
+            margin-bottom: 14px;
+        }
+
+        a {
+            color: var(--text-primary);
+            text-decoration: none;
+            border-bottom: 1px solid #e0e0e0;
+            transition: all 0.2s ease;
+        }
+
+        a:hover {
+            border-bottom-color: var(--text-primary);
+            color: #000;
+        }
+
+        strong {
+            color: var(--text-primary);
+            font-weight: 500;
+        }
+
+        .page-header {
+            display: flex;
+            align-items: baseline;
+            justify-content: space-between;
+            gap: 20px;
+            margin-bottom: 28px;
+        }
+
+        .site-title {
+            font-size: 1.75rem;
+            font-weight: 600;
+            letter-spacing: -0.03em;
+            margin: 0;
+        }
+
+        .page-nav {
+            display: flex;
+            gap: 16px;
+            flex-shrink: 0;
+        }
+
+        .page-nav a {
+            border-bottom: none;
+            color: var(--text-secondary);
+            font-size: 0.9rem;
+        }
+
+        .page-nav a:hover,
+        .page-nav a.active {
+            color: var(--text-primary);
+        }
+
+        .meta {
+            color: #9a9a9a;
+            font-size: 0.9rem;
+            margin-bottom: 28px;
+        }
+
+        .back-link {
+            display: inline-block;
+            margin-bottom: 22px;
+            color: var(--text-secondary);
+            border-bottom: none;
+            font-size: 0.95rem;
+        }
+
+        .back-link:hover {
+            color: var(--text-primary);
+        }
+
+        code {
+            font-family: "SFMono-Regular", SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
+            font-size: 0.9em;
+            background: var(--inline-code);
+            border-radius: 6px;
+            padding: 0.12em 0.35em;
+        }
+
+        pre {
+            background: var(--code-bg);
+            border: 1px solid var(--code-border);
+            border-radius: 12px;
+            padding: 16px 18px;
+            overflow-x: auto;
+            margin: 18px 0 22px;
+        }
+
+        pre code {
+            display: block;
+            background: transparent;
+            padding: 0;
+            border-radius: 0;
+            color: #333333;
+            line-height: 1.6;
+        }
+
+        ul {
+            padding-left: 20px;
+            margin-bottom: 8px;
+        }
+
+        .social-row {
+            display: flex;
+            gap: 20px;
+            margin-top: 28px;
+            padding-top: 20px;
+            border-top: 1px solid var(--muted-border);
+        }
+
+        .social-link {
+            border-bottom: none;
+            color: #999;
+            display: flex;
+            align-items: center;
+        }
+
+        .social-link:hover {
+            color: var(--text-primary);
+            transform: translateY(-1px);
+        }
+
+        .social-link svg {
+            width: 20px;
+            height: 20px;
+        }
+
+        @media (max-width: 600px) {
+            main { padding-top: 60px; }
+            .page-header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 10px;
+            }
+            h1 {
+                font-size: 1.7rem;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <main>
+        <header class="page-header">
+            <div class="site-title">Surya Subramanian</div>
+            <nav class="page-nav" aria-label="Primary">
+                <a href="../index.html">Home</a>
+                <a href="../blog.html" class="active">Blog</a>
+            </nav>
+        </header>
+
+        <article>
+            <a href="../blog.html" class="back-link">Back to blog</a>
+            <h1>[Draft] MoE Training + Expert Parallelism</h1>
+            <p class="meta">March 18, 2026</p>
+
+            <p>
+                Mixture-of-experts training is useful because it increases parameter count without paying dense feed-forward compute for every token. Once experts are sharded across ranks, though, each MoE layer depends on routing, token packing, transport, expert execution, and restore. That path is where most of the systems work shows up.
+            </p>
+
+            <p>
+                A routed MoE layer has a straightforward high-level shape: score tokens with a router, choose a top-k set of experts, group tokens by destination rank, move them to the GPUs that own those experts, run the local expert MLPs, and then restore token order on the way back out.
+            </p>
+
+            <h2>Common bottlenecks</h2>
+            <p>
+                In practice, throughput usually degrades for one of three reasons:
+            </p>
+            <ul>
+                <li>too many tokens choose the same expert and create load imbalance,</li>
+                <li>packing and unpacking cost more than expected, or</li>
+                <li>the all-to-all exchange sits directly on the critical path.</li>
+            </ul>
+
+            <p>
+                The communication path matters most when expert parallelism spans multiple GPUs. If every rank has to build full send buffers, launch a collective, wait for the full receive side, and only then start expert compute, the sparse layer becomes a sequence of blocking stages.
+            </p>
+
+            <h2>Where NVSHMEM can help</h2>
+            <p>
+                NVSHMEM is useful here because it gives us a one-sided communication model across GPUs. Instead of expressing the whole dispatch as a single bulk exchange, we can think in terms of remote writes, readiness signals, and earlier consumption on the receiving rank. That maps fairly naturally onto MoE routing once expert destinations are known.
+            </p>
+
+            <p>
+                A sender can write token data into a remote staging region for a destination expert, signal that the slot is ready, and let the receiving rank start local work sooner. This does not solve routing skew or poor layouts, but it can reduce idle time between dispatch and expert execution.
+            </p>
+
+            <h2>Dispatch sketch</h2>
+            <pre><code># High-level MoE flow
+router_logits = gate(x)
+topk_weight, topk_idx = torch.topk(router_logits, k=2, dim=-1)
+topk_weight = torch.softmax(topk_weight, dim=-1)
+
+packed_tokens, packed_meta = pack_by_destination(x, topk_idx)
+remote_dispatch(packed_tokens, packed_meta)   # peer writes or collective exchange
+expert_out = run_local_experts()
+y = combine_and_restore(expert_out, packed_meta, topk_weight)</code></pre>
+
+            <p>
+                In a standard collective implementation, `remote_dispatch(...)` usually means building split sizes, running an all-to-all, and waiting for the receive side to be materialized before expert work begins. With an NVSHMEM-style approach, dispatch can be more incremental.
+            </p>
+
+            <pre><code>// Simplified NVSHMEM-style pseudocode
+for each token assigned to remote_expert:
+    dst_rank = expert_to_rank[remote_expert]
+    dst_slot = reserve_remote_slot(dst_rank, remote_expert)
+
+    nvshmem_putmem_nbi(remote_buffer[dst_rank][dst_slot],
+                       local_token_ptr,
+                       token_bytes,
+                       dst_rank)
+
+    nvshmem_signal_op(remote_ready[dst_rank][dst_slot], 1, NVSHMEM_SIGNAL_SET, dst_rank)
+
+// Receiver polls readiness and starts local expert work as slots arrive.</code></pre>
+
+            <p>
+                This is only a sketch, but it captures the pattern: write into expert-owned remote buffers, signal readiness, and give the receiver the option to start work before the entire exchange has finished. That is mainly useful when the local expert kernels are large enough to overlap with in-flight communication.
+            </p>
+
+            <h2>What still matters</h2>
+            <p>
+                Communication primitives are only one part of the picture. MoE layers still depend heavily on predictable capacity, low-overhead packing, contiguous layouts, and a router that does not collapse onto a small subset of experts. If any of those pieces are unstable, the communication path gets harder to hide no matter what API is underneath it.
+            </p>
+
+            <p>
+                In practice you still need:
+            </p>
+            <ul>
+                <li>stable capacity limits so experts do not overflow unpredictably,</li>
+                <li>layouts that keep packed token buffers contiguous and cheap to index,</li>
+                <li>enough local work to hide remote latency, and</li>
+                <li>a router that does not collapse onto a handful of experts.</li>
+            </ul>
+
+            <h2>Closing note</h2>
+            <p>
+                For expert parallel MoE, the dispatch path deserves as much attention as the expert kernel. NVSHMEM is interesting because it gives another way to structure that path with finer-grained data movement and synchronization, which can be a better fit for irregular token routing than a fully bulk-synchronous schedule.
+            </p>
+
+            <p>
+                Whether that tradeoff pays off depends on the layer shape, the interconnect, and how much overlap the implementation can actually sustain.
+            </p>
+        </article>
+
+        <nav class="social-row">
+            <a href="mailto:ssubrama32@gatech.edu" class="social-link" aria-label="Email">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"></path><polyline points="22,6 12,13 2,6"></polyline></svg>
+            </a>
+            <a href="https://x.com/suryaasub" class="social-link" aria-label="Twitter / X">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 4l11.733 16h4.672L8.673 4z"/><path d="M4 20l6.768-6.768m2.46-2.46L20 4"/></svg>
+            </a>
+            <a href="https://github.com/codingwithsurya" class="social-link" aria-label="GitHub">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.87a3.37 3.37 0 0 0-.94-2.61c3.14-.35 6.44-1.54 6.44-7A5.44 5.44 0 0 0 20 4.77 5.07 5.07 0 0 0 19.91 1S18.73.65 16 2.48a13.38 13.38 0 0 0-7 0C6.27.65 5.09 1 5.09 1A5.07 5.07 0 0 0 5 4.77a5.44 5.44 0 0 0-1.5 3.78c0 5.42 3.3 6.61 6.44 7A3.37 3.37 0 0 0 9 18.13V22"></path></svg>
+            </a>
+            <a href="https://www.linkedin.com/in/suryasub/" class="social-link" aria-label="LinkedIn">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/></svg>
+            </a>
+        </nav>
+    </main>
+
+</body>
+</html>
