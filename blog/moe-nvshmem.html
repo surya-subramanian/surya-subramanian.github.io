@@ -3,8 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>[Draft] MoE Training + Expert Parallelism | Surya Subramanian</title>
-    <meta name="description" content="A technical note on MoE training, expert parallel routing, and using NVSHMEM-style communication to reduce stalls.">
+    <title>Hello World! | Surya Subramanian</title>
+    <meta name="description" content="A short introduction to the blog and the kinds of ML systems topics it will cover.">
     
     <style>
         :root {
@@ -13,9 +13,6 @@
             --text-secondary: #666666;
             --accent: #000000;
             --muted-border: #f0f0f0;
-            --code-bg: #fafafa;
-            --code-border: #ececec;
-            --inline-code: #f5f5f5;
         }
 
         * {
@@ -129,37 +126,6 @@
             color: var(--text-primary);
         }
 
-        code {
-            font-family: "SFMono-Regular", SFMono-Regular, Consolas, "Liberation Mono", Menlo, monospace;
-            font-size: 0.9em;
-            background: var(--inline-code);
-            border-radius: 6px;
-            padding: 0.12em 0.35em;
-        }
-
-        pre {
-            background: var(--code-bg);
-            border: 1px solid var(--code-border);
-            border-radius: 12px;
-            padding: 16px 18px;
-            overflow-x: auto;
-            margin: 18px 0 22px;
-        }
-
-        pre code {
-            display: block;
-            background: transparent;
-            padding: 0;
-            border-radius: 0;
-            color: #333333;
-            line-height: 1.6;
-        }
-
-        ul {
-            padding-left: 20px;
-            margin-bottom: 8px;
-        }
-
         .social-row {
             display: flex;
             gap: 20px;
@@ -211,95 +177,11 @@
 
         <article>
             <a href="../blog.html" class="back-link">Back to blog</a>
-            <h1>[Draft] MoE Training + Expert Parallelism</h1>
+            <h1>Hello World!</h1>
             <p class="meta">March 18, 2026</p>
 
             <p>
-                Mixture-of-experts training is useful because it increases parameter count without paying dense feed-forward compute for every token. Once experts are sharded across ranks, though, each MoE layer depends on routing, token packing, transport, expert execution, and restore. That path is where most of the systems work shows up.
-            </p>
-
-            <p>
-                A routed MoE layer has a straightforward high-level shape: score tokens with a router, choose a top-k set of experts, group tokens by destination rank, move them to the GPUs that own those experts, run the local expert MLPs, and then restore token order on the way back out.
-            </p>
-
-            <h2>Common bottlenecks</h2>
-            <p>
-                In practice, throughput usually degrades for one of three reasons:
-            </p>
-            <ul>
-                <li>too many tokens choose the same expert and create load imbalance,</li>
-                <li>packing and unpacking cost more than expected, or</li>
-                <li>the all-to-all exchange sits directly on the critical path.</li>
-            </ul>
-
-            <p>
-                The communication path matters most when expert parallelism spans multiple GPUs. If every rank has to build full send buffers, launch a collective, wait for the full receive side, and only then start expert compute, the sparse layer becomes a sequence of blocking stages.
-            </p>
-
-            <h2>Where NVSHMEM can help</h2>
-            <p>
-                NVSHMEM is useful here because it gives us a one-sided communication model across GPUs. Instead of expressing the whole dispatch as a single bulk exchange, we can think in terms of remote writes, readiness signals, and earlier consumption on the receiving rank. That maps fairly naturally onto MoE routing once expert destinations are known.
-            </p>
-
-            <p>
-                A sender can write token data into a remote staging region for a destination expert, signal that the slot is ready, and let the receiving rank start local work sooner. This does not solve routing skew or poor layouts, but it can reduce idle time between dispatch and expert execution.
-            </p>
-
-            <h2>Dispatch sketch</h2>
-            <pre><code># High-level MoE flow
-router_logits = gate(x)
-topk_weight, topk_idx = torch.topk(router_logits, k=2, dim=-1)
-topk_weight = torch.softmax(topk_weight, dim=-1)
-
-packed_tokens, packed_meta = pack_by_destination(x, topk_idx)
-remote_dispatch(packed_tokens, packed_meta)   # peer writes or collective exchange
-expert_out = run_local_experts()
-y = combine_and_restore(expert_out, packed_meta, topk_weight)</code></pre>
-
-            <p>
-                In a standard collective implementation, `remote_dispatch(...)` usually means building split sizes, running an all-to-all, and waiting for the receive side to be materialized before expert work begins. With an NVSHMEM-style approach, dispatch can be more incremental.
-            </p>
-
-            <pre><code>// Simplified NVSHMEM-style pseudocode
-for each token assigned to remote_expert:
-    dst_rank = expert_to_rank[remote_expert]
-    dst_slot = reserve_remote_slot(dst_rank, remote_expert)
-
-    nvshmem_putmem_nbi(remote_buffer[dst_rank][dst_slot],
-                       local_token_ptr,
-                       token_bytes,
-                       dst_rank)
-
-    nvshmem_signal_op(remote_ready[dst_rank][dst_slot], 1, NVSHMEM_SIGNAL_SET, dst_rank)
-
-// Receiver polls readiness and starts local expert work as slots arrive.</code></pre>
-
-            <p>
-                This is only a sketch, but it captures the pattern: write into expert-owned remote buffers, signal readiness, and give the receiver the option to start work before the entire exchange has finished. That is mainly useful when the local expert kernels are large enough to overlap with in-flight communication.
-            </p>
-
-            <h2>What still matters</h2>
-            <p>
-                Communication primitives are only one part of the picture. MoE layers still depend heavily on predictable capacity, low-overhead packing, contiguous layouts, and a router that does not collapse onto a small subset of experts. If any of those pieces are unstable, the communication path gets harder to hide no matter what API is underneath it.
-            </p>
-
-            <p>
-                In practice you still need:
-            </p>
-            <ul>
-                <li>stable capacity limits so experts do not overflow unpredictably,</li>
-                <li>layouts that keep packed token buffers contiguous and cheap to index,</li>
-                <li>enough local work to hide remote latency, and</li>
-                <li>a router that does not collapse onto a handful of experts.</li>
-            </ul>
-
-            <h2>Closing note</h2>
-            <p>
-                For expert parallel MoE, the dispatch path deserves as much attention as the expert kernel. NVSHMEM is interesting because it gives another way to structure that path with finer-grained data movement and synchronization, which can be a better fit for irregular token routing than a fully bulk-synchronous schedule.
-            </p>
-
-            <p>
-                Whether that tradeoff pays off depends on the layer shape, the interconnect, and how much overlap the implementation can actually sustain.
+                Hi! A lot of what I know came from blog posts by people generous enough to share their work, so I hope to return the favor. Expect writing on technical ML systems topics I haven't seen covered well, and things I find interesting along the way. Stay tuned!
             </p>
         </article>
 
