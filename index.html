@@ -221,13 +221,16 @@
 
         <section>
             <p>
-                Hey y'all — my name is Surya! I study computer science @ Georgia Tech. My interests lie in the intersection of machine learning and systems for efficient model training and inference.
+                Hey y’all — my name is Surya! I’m interested in the intersection of machine learning and systems for efficient training and inference.
             </p>
             <p>
                 Previously, I was on NVIDIA’s cuBLAS team writing matmul CUDA kernels for Blackwell GPUs. I worked on emulating higher-precision GEMMs with low-precision tensor cores for faster throughput.
             </p>
             <p>
-                Before that, I was on the PyTorch team at Meta, where I worked on PyTorch Symmetric Memory to overlap communication and compute in distributed <a href="https://github.com/openai/triton">Triton</a> kernels for tensor and expert parallelism. We open sourced some of our work in <a href="https://github.com/meta-pytorch/kraken">Kraken</a>, a Triton library of symmetric memory kernels. Prior to that, I worked on ML infrastructure at Pinterest.
+                Before that, I was on the PyTorch team at Meta, where I worked on PyTorch Symmetric Memory. I worked on inter-node support via the <a href="https://developer.nvidia.com/nvshmem">NVSHMEM</a> backend, and wrote fused distributed <a href="https://github.com/openai/triton">Triton</a> kernels for tensor parallelism (e.g. GEMM + All Reduce, GEMM + Reduce Scatter, etc.). We open sourced some of our work in <a href="https://github.com/meta-pytorch/kraken">Kraken</a>, a Triton library of symmetric memory kernels. Prior to that, I worked on ML infrastructure at Pinterest.
+            </p>
+            <p>
+                I studied computer science at Georgia Tech. There, I did some research in efficient multimodal inference and KV cache compression at SAIL (our Systems for AI Lab) and earlier, worked on inference optimizations for MoE models via expert reduction.
             </p>
         </section>
 
